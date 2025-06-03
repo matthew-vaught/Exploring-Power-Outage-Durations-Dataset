@@ -4,7 +4,7 @@ Project for DSC80 at UCSD
 By Matthew Vaught
 
 # Introduction
-In this project, I explored a dataset that contained information about major power outages that occured in the United States between January 2000 and July 2016. These power outages are defined as being either large enough to have impacted at least 50,000 people or creating an unexpected energy loss of at least 300 MW. This dataset can be found and accessed through Purdue's Laboratory for Advancing Sustainable Critical Infrastructure (https://engineering.purdue.edu/LASCI/research-data/outages).
+In this project, I explored a dataset that contained information about major power outages that occured in the United States between January 2000 and July 2016. These power outages are defined as being either large enough to have impacted at least 50,000 people or creating an unexpected energy loss of at least 300 MW. This dataset can be found and accessed through Purdue's Laboratory for Advancing Sustainable Critical Infrastructure [(https://engineering.purdue.edu/LASCI/research-data/outages)](https://engineering.purdue.edu/LASCI/research-data/outages).
 
 This dataset initially contained 1534 rows and 57 columns corresponding to 1534 unique major power outages and 57 different features related to each power outage, such as climate and geographical descriptions, economic and population statistics, and severity statistics.
 
@@ -31,3 +31,4 @@ Although the original dataset contains 57 unique features, I will be selecting a
 |`'TOTAL.CUSTOMERS'`       |Annual total number of electricity customers served in the state at the time of the outage                     |
 
 # Data Cleaning and Exploratory Data Analysis
+
