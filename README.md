@@ -108,22 +108,24 @@ The next plot below is a box-and-whisker plot that shows the distribution of out
 ></iframe>
 
 ### Grouping and Aggregates
-I grouped by NERC Region and then performed an aggregate function mean() to get the average severity metrics for each region. The severity metrics are Outage Duration, Customers Affected, and Demand Loss. The first few rows of this DataFrame are shown below: 
+I first created a pivot table indexed by `CLIMATE.REGION` which shows the average severity metrics for each climate region. The severity metrics are Outage Duration, Customers Affected, and Demand Loss. The first few rows of this DataFrame are shown below: 
 
-| NERC.REGION   |   OUTAGE.DURATION |   CUSTOMERS.AFFECTED |   DEMAND.LOSS.MW |
-|:--------------|------------------:|---------------------:|-----------------:|
-| ASCC          |           nan     |                14273 |           35     |
-| ECAR          |          5603.31  |               256354 |         1314.48  |
-| FRCC          |          4271.12  |               375007 |         1072.6   |
-| FRCC, SERC    |           372     |                  nan |          nan     |
-| HECO          |           895.333 |               126729 |          466.667 |
+| CLIMATE.REGION      | CUSTOMERS.AFFECTED | DEMAND.LOSS.MW | OUTAGE.DURATION |
+|---------------------|--------------------|----------------|-----------------|
+| Central             | 1.20e+06           | 11000.0        | 23773.0         |
+| East North Central  | 2.10e+06           | 11000.0        | 108653.0        |
+| Northeast           | 3.13e+06           | 22934.0        | 60480.0         |
+| Northwest           | 7.00e+05           | 1600.0         | 22769.0         |
+| South               | 2.50e+06           | 8087.0         | 28170.0         |
 
-I also performed grouping with a pivot table, on Climate Region and Cause Category to see which regions experienced severe weather outages the most. The first few rows of this data frame are shown below:
+I also created a pivot table indexed by `CAUSE.CATEGORY` which again shows the average severity metrics, but this time for each cause category. The severity metrics are Outage Duration, Customers Affected, and Demand Loss. This entire DataFrame is shown below:
 
-| CLIMATE.REGION     |   equipment failure |   fuel supply emergency |   intentional attack |   islanding |   public appeal |   severe weather |   system operability disruption |
-|:-------------------|--------------------:|------------------------:|---------------------:|------------:|----------------:|-----------------:|--------------------------------:|
-| Central            |                   7 |                       4 |                   38 |           3 |               2 |              135 |                              11 |
-| East North Central |                   3 |                       5 |                   20 |           1 |               2 |              104 |                               3 |
-| Northeast          |                   5 |                      14 |                  135 |           1 |               4 |              176 |                              15 |
-| Northwest          |                   2 |                       1 |                   89 |           5 |               2 |               29 |                               4 |
-| South              |                  10 |                       7 |                   28 |           2 |              42 |              113 |                              27 |
+| CAUSE.CATEGORY                  | CUSTOMERS.AFFECTED | DEMAND.LOSS.MW | OUTAGE.DURATION |
+|---------------------------------|--------------------|----------------|-----------------|
+| equipment failure               | 105450.59          | 380.00         | 1850.56         |
+| fuel supply emergency           | 1.00               | 634.17         | 13484.03        |
+| intentional attack              | 18753.42           | 94.06          | 521.93          |
+| islanding                       | 7232.72            | 441.89         | 200.55          |
+| public appeal                   | 15999.40           | 2818.32        | 1468.45         |
+| severe weather                  | 190971.94          | 633.16         | 3899.71         |
+| system operability disruption   | 211066.02          | 928.90         | 747.09          |
