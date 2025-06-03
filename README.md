@@ -57,44 +57,51 @@ The first few rows of this cleaned DataFrame are shown below, with a portion of 
 ## Exploratory Data Analysis
 
 ### Univariate Analysis
-In my exploratory data analysis, I first perform univariate analysis to examine the distribution of single variables. 
+I first performed univariate analysis on the dataset to get a better idea of the characteristics of individual columns. 
 
-First, I wanted to see how the number of outages has changed over time.
+First, I wanted to see what the distributions of my three severity metrics (outage duration, demand loss, number of customers affected) looked like. In order to do this, I binned the values of each column and created a histogram to visualize how many observations were in each bin. This first plot shows how most of the outage durations are relatively short, lasting less than 1000 minutes. 
 <iframe
-  src="assets/outage_over_time.html"
+  src="assets/binned_outage_duration_hist.html"
   width="800"
   height="600"
   frameborder="0"
 ></iframe>
-I also wanted to see the distribution of major causes of power outages.
+This next plot shows how the majority of the major power outages experienced a demand loss between 100-500 MW, with fewer outages having either really small or really large demand losses.
 <iframe
-  src="assets/major_causes.html"
+  src="assets/binned_demand_loss_hist.html"
   width="800"
   height="600"
   frameborder="0"
 ></iframe>
-Then, I wanted to see the distribution of the number of outages by each U.S. state. 
+This plot shows how the majority of the major power outages affected between 50,000-250,000 customers, with very few outages affecting less than 10,000 customers.
 <iframe
-  src="assets/map1.html"
+  src="assets/binned_customers_affected_hist.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+I also wanted to hone in on outage duration in particular to see how the average outage duration has changed over time. This plot shows that generally, outage durations have decreased over the years.
+<iframe
+  src="assets/outage_duration_by_year_line_plot.html"
   width="800"
   height="600"
   frameborder="0"
 ></iframe>
 
 ### Bivariate Analysis
-I conducted many bivariate analyses, and the most significant results are shown below.
+Next, I conducted many bivariate analyses to get a better understanding of what features were correlated with each other, and the most significant results are shown below.
 
-I examined the relationship between Outage Duration and Customers Affected, two metrics of the severity of a power outage. I expected there to be a positive correlation, since major outages likely affect a lot of customers and have a long duration, but there was variability within this. There are many outages that affected a lot of customers but were not as long, indicating that Customers Affected might be a better metric for measuring outage severity.
+I first examined the relationship between the duration of the power outage and the number of customers served within the state that the power outage occured. In order to do this, I binned the `TOTAL.CUSTOMERS` column into 5 quantiles, then created a histogram with the average outage durations for each quantile. This plot shows that in states with either a very low or a very high number of customers served, the average outage duration is slightly lower.
 <iframe
-  src="assets/duration_cust.html"
+  src="assets/outage_duration_v_customers_served_hist.html"
   width="800"
   height="600"
   frameborder="0"
 ></iframe>
 
-The plot below shows the relation between outage duration and cause category. It shows that some of the outages with the longest duration were due to a fuel supply emergency.
+The next plot below is a box-and-whisker plot that shows the distribution of outage durations for each of the different values in the `CAUSE.CATEGORY` column. Here it can be seen that causes such as severe weather, public appeals, and fuel supply emergencies have the highest average outage durations.
 <iframe
-  src="assets/duration_cause.html"
+  src="assets/outage_duration_v_cause_category_boxandwhisk.html"
   width="800"
   height="600"
   frameborder="0"
