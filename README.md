@@ -57,25 +57,25 @@ The first few rows of this cleaned DataFrame are shown below, with a portion of 
 ## Exploratory Data Analysis
 
 ### Univariate Analysis
-In my exploratory data analysis, I first perform univariate analysis to examine the distribution of single variables. 
+I first performed univariate analysis on the dataset to get a better idea of the characteristics of individual columns. 
 
-First, I wanted to see how the number of outages has changed over time.
+First, I wanted to see what the distributions of my three severity metrics (outage duration, demand loss, number of customers affected) looked like. In order to do this, I binned the values of each column and created a histogram to visualize how many observations were in each bin.
 <iframe
-  src="assets/outage_over_time.html"
+  src="assets/binned_outage_duration_hist.html"
   width="800"
   height="600"
   frameborder="0"
 ></iframe>
-I also wanted to see the distribution of major causes of power outages.
+
 <iframe
-  src="assets/major_causes.html"
+  src="assets/binned_demand_loss_hist.html"
   width="800"
   height="600"
   frameborder="0"
 ></iframe>
-Then, I wanted to see the distribution of the number of outages by each U.S. state. 
+
 <iframe
-  src="assets/map1.html"
+  src="assets/binned_customers_affected_hist.html"
   width="800"
   height="600"
   frameborder="0"
