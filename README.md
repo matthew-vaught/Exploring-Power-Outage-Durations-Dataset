@@ -220,10 +220,19 @@ At the time of prediction, we would know the state, NERC region, climate region,
 # Baseline Model
 My model is a multiple linear regression model using the `HURRICANE.NAMES` and `CLIMATE.REGION` features to predict the outage duration of a major power outage. This information would provide companies an estimate of how long power could be out given the circumstances and help them and local governments / agencies prepare for the upcoming outage and aid those in need.
 
-The features are: `HURRICANE.NAMES` (nominal) and `CLIMATE.REGION` (nominal).
-I chose these because I can use `HURRICANE.NAMES` to determine whether the outage was caused by a hurricane or not, which I have already proven is a very indicative factor of how long the outage will last. Also I used `CLIMATE.REGION` because certain climates tend to have higher average outage durations than others.
+The features are: `HURRICANE.NAMES` (nominal) and `MONTH` (nominal).
+I chose these because I can use `HURRICANE.NAMES` to determine whether the outage was caused by a hurricane or not, which I have already proven is a very indicative factor of how long the outage will last. Also I used `MONTH` because certain months tend to have higher average outage durations than others.
 
 In order to use the `HURRICANE.NAMES` column as an indicator of whether the outage was caused by a hurricane or not I built my own function is_hurricane that converts these values to either a 1 if it was caused by a hurricane or a 0 if it was not, and then I used a FunctionTransformer on this to convert the column from nominal to numerical. Additionally, because `CLIMATE.REGION` is also nominal, I used a OneHotEncoder to transform this column before creating a pipeline to integrate each of these transformations and train and test my linear regression model.
 
-The performance of this model was okay but not amazing, with an rmse of roughly 3297 on the test set. 
-The R-Squared value was 0.177.
+The performance of this model wasn't the best, with an rmse of 3535.44 on the test set. 
+The R-Squared value was 0.053.
+
+# Final Model
+My final model incorporated these features: `HURRICANE.NAMES`, `MONTH`, `CLIMATE.REGION`, and `YEAR`. I implemented a Lasso Regression and was able to achieve an R-Squared of .172 on the test set. 
+
+I added `CLIMATE.REGION` (nominal) becaause certain climate regions have higher average outage durations, likely due to weather impact as well as more electricity demands in certain months. `YEAR` (quantitative) is included because there is an overall roughly negative linear trend between year and outage duration, where the average outage duration has gone down over time.
+
+I used a K-fold cross validation to find the best hyperparemeter to use with my lasso regression, and the only hyperparemeter tested was the alpha level. After performing a k-fold cross validation with cv=5, testing every alpha value from 1 to 35, I found that 20 was the optimal value for this hyperparemeter.
+
+I used RMSE to measure the performance of my model, and I got a value of 3306.05. Because the RMSE decreased from the baseline model to the final, this indicates better performance of the final model. It is more accurately able to predict the outage duration of a major power outage than my initial baseline model.
