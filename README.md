@@ -57,7 +57,7 @@ The first few rows of this cleaned DataFrame are shown below, with a portion of 
 ## Exploratory Data Analysis
 
 ### Univariate Analysis
-I first performed univariate analysis on the dataset to get a better idea of the characteristics of individual columns. 
+I performed univariate analysis on the dataset to get a better idea of the characteristics of individual columns. 
 
 First, I wanted to see what the distributions of my three severity metrics (outage duration, demand loss, number of customers affected) looked like. In order to do this, I binned the values of each column and created a histogram to visualize how many observations were in each bin. This first plot shows how most of the outage durations are relatively short, lasting less than 1000 minutes. 
 <iframe
@@ -129,3 +129,59 @@ I also created a pivot table indexed by `CAUSE.CATEGORY` which again shows the a
 | public appeal                   | 15999.40           | 2818.32        | 1468.45         |
 | severe weather                  | 190971.94          | 633.16         | 3899.71         |
 | system operability disruption   | 211066.02          | 928.90         | 747.09          |
+
+# Assessment of Missingness
+
+## NMAR Analysis
+With many columns in this dataset containing missing values, one column that is likely NMAR is `DEMAND.LOSS.MW`. This is because the description in the data dictionary for this variable explicity warns about the potentially inaccurate recordings, stating that although the value is supposed to be measured as peak demand it is often inaccurately recorded as total demand. This indicates that the data collection for this variable in particle might not be entirely accurate. Also, logically it would make sense for this column to be NMAR because extremely high demand loss values could be less likely to be reported in fear of the negative publicity it would bring, and extremely low values could also be less likely to be reported since they might be considered negligible.
+
+Additional data I could collect to determine if `DEMAND.LOSS.MW` is actually MAR is to collect the company responsible for reporting each outage, and then perform further analysis to see whether the missingness of the demand loss values is dependent on the company, because some companies might be more prone to innaccurately providing the data or even outright excluding the data if it is extreme on either end.
+
+## Missingness Dependency
+When testing for missingness dependency, I will be focusing on the column `OUTAGE.DURATION`. I will test this against two other columns, `NERC.REGION` and `MONTH` in order to see if the missingness of the outage duration values depends on either of these other two columns.
+
+### NERC Region
+First, I will examine the distribution of NERC Regions when the outage duration values are missing vs not missing.
+
+**Null Hypothesis:** The distribution of the NERC Region column is the same when Outage Duration is missing vs not missing.
+
+**Alternate Hypothesis:** The distribution of the NERC Region column is different when Outage Duration is missing vs not missing. 
+
+Here is the distribution of the Nerc Region column when Outage Duration is missing vs not missing.
+<iframe
+  src="assets/nerc_missingness_barh.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+I found an observed TVD of 0.145 which has a p value of 0.036. The empirical distribution of the TVDs is shown below. At this value, I decide to reject the null hypothesis in favor of the alternate hypothesis, indicating that the distribution of the NERC Region column is statistically different when Outage Duration is missing vs not missing. This suggests that the missingness of the outage duration values is dependent on the NERC Region column.
+<iframe
+  src="assets/nerc_missingness_pval.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+### Month
+Next, I examined whether the missingness of Outage Duration values depends on the `MONTH` column.
+
+**Null Hypothesis:** The distribution of the Month column is the same when Outage Duration is missing vs not missing.
+
+**Alternate Hypothesis:** The distribution of the Month column is different when Outage Duration is missing vs not missing. 
+
+Here is the distribution of the Month column when Outage Duration is missing vs not missing.
+<iframe
+  src="assets/month_missingness_barh.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+I found an observed TVD of 0.13 which has a p value of 0.26. The empirical distribution of the TVDs is shown below. At this value, I fail to the null hypothesis in favor of the alternate hypothesis, indicating that the distribution of the Month column is not statistically different when Outage Duration is missing vs not missing.
+<iframe
+  src="assets/month_missingness_pval.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
