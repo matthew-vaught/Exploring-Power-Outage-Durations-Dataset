@@ -200,7 +200,7 @@ I will be testing whether the average outage duration for major outages caused b
 
 I performed a permutation test with 10,000 iterations in order to produce an empirical distribution of the test statisic under the null hypothesis. 
 
-The p-value that I got was 0.0, so at a significance level of 0.05, we reject the null hypothesis. Because these results are statistically significant, we can conclude that the average outage duration of major outages caused by hurricanes is indeed greater than the average outage duration of major outages not caused by hurricanes.
+The p-value that I got was 0.0, so at a significance level of 0.05, we reject the null hypothesis. This suggests that the average outage duration of major outages caused by hurricanes is indeed greater than the average outage duration of major outages not caused by hurricanes.
 
 The plot below shows the observed difference against the empirical distribution of differences from the permutation tests.
 <iframe
@@ -209,3 +209,21 @@ The plot below shows the observed difference against the empirical distribution 
   height="600"
   frameborder="0"
 ></iframe>
+
+# Framing a Prediction Problem
+My model will try to predict the outage duration of a major power outage, which is a regression problem because we are trying to predict an actual numerical value.
+
+I chose to use RMSE to evaluate the performance of my model because this allows me to see how many minutes off the model is on average which is very useful.
+
+At the time of prediction, we would know the state, NERC region, climate region, year, month, total customers, and whether it was a hurricane or not (this would be far easier to ascertain at the time of prediction than the overall cause category and thus I thought it reasonable to include). This information will allow us to predict the outage duration.
+
+# Baseline Model
+My model is a multiple linear regression model using the `HURRICANE.NAMES` and `CLIMATE.REGION` features to predict the outage duration of a major power outage. This information would provide companies an estimate of how long power could be out given the circumstances and help them and local governments / agencies prepare for the upcoming outage and aid those in need.
+
+The features are: `HURRICANE.NAMES` (nominal) and `CLIMATE.REGION` (nominal).
+I chose these because I can use `HURRICANE.NAMES` to determine whether the outage was caused by a hurricane or not, which I have already proven is a very indicative factor of how long the outage will last. Also I used `CLIMATE.REGION` because certain climates tend to have higher average outage durations than others.
+
+In order to use the `HURRICANE.NAMES` column as an indicator of whether the outage was caused by a hurricane or not I built my own function is_hurricane that converts these values to either a 1 if it was caused by a hurricane or a 0 if it was not, and then I used a FunctionTransformer on this to convert the column from nominal to numerical. Additionally, because `CLIMATE.REGION` is also nominal, I used a OneHotEncoder to transform this column before creating a pipeline to integrate each of these transformations and train and test my linear regression model.
+
+The performance of this model was okay but not amazing, with an rmse of roughly 3297 on the test set. 
+The R-Squared value was 0.177.
