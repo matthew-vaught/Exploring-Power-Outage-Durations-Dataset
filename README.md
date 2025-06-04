@@ -66,6 +66,7 @@ First, I wanted to see what the distributions of my three severity metrics (outa
   height="600"
   frameborder="0"
 ></iframe>
+
 This next plot shows how the majority of the major power outages experienced a demand loss between 100-500 MW, with fewer outages having either really small or really large demand losses.
 <iframe
   src="assets/binned_demand_loss_hist.html"
@@ -73,6 +74,7 @@ This next plot shows how the majority of the major power outages experienced a d
   height="600"
   frameborder="0"
 ></iframe>
+
 This plot shows how the majority of the major power outages affected between 50,000-250,000 customers, with very few outages affecting less than 10,000 customers.
 <iframe
   src="assets/binned_customers_affected_hist.html"
@@ -80,6 +82,7 @@ This plot shows how the majority of the major power outages affected between 50,
   height="600"
   frameborder="0"
 ></iframe>
+
 I also wanted to hone in on outage duration in particular to see how the average outage duration has changed over time. This plot shows that generally, outage durations have decreased over the years.
 <iframe
   src="assets/outage_duration_by_year_line_plot.html"
@@ -87,6 +90,7 @@ I also wanted to hone in on outage duration in particular to see how the average
   height="600"
   frameborder="0"
 ></iframe>
+
 ### Bivariate Analysis
 Next, I conducted many bivariate analyses to get a better understanding of what features were correlated with each other, and the most significant results are shown below.
 
@@ -97,6 +101,7 @@ I first examined the relationship between the duration of the power outage and t
   height="600"
   frameborder="0"
 ></iframe>
+
 The next plot below is a box-and-whisker plot that shows the distribution of outage durations for each of the different values in the `CAUSE.CATEGORY` column. Here it can be seen that causes such as severe weather, public appeals, and fuel supply emergencies have the highest average outage durations.
 <iframe
   src="assets/outage_duration_v_cause_category_boxandwhisk.html"
@@ -104,6 +109,7 @@ The next plot below is a box-and-whisker plot that shows the distribution of out
   height="600"
   frameborder="0"
 ></iframe>
+
 ### Grouping and Aggregates
 I first created a pivot table indexed by `CLIMATE.REGION` which shows the average severity metrics for each climate region. The severity metrics are Outage Duration, Customers Affected, and Demand Loss. The first few rows of this DataFrame are shown below: 
 
@@ -151,6 +157,7 @@ Here is the distribution of the Nerc Region column when Outage Duration is missi
   height="600"
   frameborder="0"
 ></iframe>
+
 I found an observed TVD of 0.145 which has a p value of 0.036. The empirical distribution of the TVDs is shown below. At this value, I decide to reject the null hypothesis in favor of the alternate hypothesis, indicating that the distribution of the NERC Region column is statistically different when Outage Duration is missing vs not missing. This suggests that the missingness of the outage duration values is dependent on the NERC Region column.
 <iframe
   src="assets/nerc_missingness_pval.html"
@@ -158,6 +165,7 @@ I found an observed TVD of 0.145 which has a p value of 0.036. The empirical dis
   height="600"
   frameborder="0"
 ></iframe>
+
 ### Month
 Next, I examined whether the missingness of Outage Duration values depends on the `MONTH` column.
 
@@ -172,6 +180,7 @@ Here is the distribution of the Month column when Outage Duration is missing vs 
   height="600"
   frameborder="0"
 ></iframe>
+
 I found an observed TVD of 0.13 which has a p value of 0.26. The empirical distribution of the TVDs is shown below. At this value, I fail to the null hypothesis in favor of the alternate hypothesis, indicating that the distribution of the Month column is not statistically different when Outage Duration is missing vs not missing.
 <iframe
   src="assets/month_missingness_pval.html"
@@ -179,22 +188,23 @@ I found an observed TVD of 0.13 which has a p value of 0.26. The empirical distr
   height="600"
   frameborder="0"
 ></iframe>
+
 # Hypothesis Testing
-I will be testing whether the outage duration is greater on average for severe weather outages over intentional attack outages. The relevant columns for this test are `OUTAGE.DURATION` and `CAUSE.CATEGORY`. I will only be using the outages where `CAUSE.CATEGORY` is equal to 'severe weather' or 'intentional attack'. 
+I will be testing whether the average outage duration for major outages caused by hurricanes is greater than the average outage duration for major outages not caused by hurricanes. The relevant columns for this test are `OUTAGE.DURATION` and `HURRICANE.NAMES`. Any values in the `HURRICANE.NAMES` column that are not missing indicate that the outage was caused by a hurricane, and all values that are missing indicate the outage was not caused by a hurricane.
 
-**Null Hypothesis:** On average, the duration of severe weather outages is the same as the duration of intentional attack outages.
+**Null Hypothesis:** On average, the duration of outages caused by hurricanes is the same as the duration of outages not caused by hurricanes.
 
-**Alternate Hypothesis:** On average, the duration of severe weather outages is greater than the duration of intentional attack outages.
+**Alternate Hypothesis:** On average, the duration of outages caused by hurricanes is greater than the duration of outages not caused by hurricanes.
 
-**Test Statistic:** Difference in means. Specifically, mean outage duration of severe weather - mean outage duration of intentional attacks.
+**Test Statistic:** Difference in means. Specifically, the mean outage duration of hurricanes - mean outage duration of non hurricanes.
 
-I performed a permutation test with 10,000 simulations in order to generate an empirical distribution of the test statisic under the null hypothesis. 
+I performed a permutation test with 10,000 iterations in order to produce an empirical distribution of the test statisic under the null hypothesis. 
 
-The p-value I got was 0.0, so with a standard significance level of 0.05, we reject the null hypothesis because the results are statistically significant. We conclude that on average, the duration of severe weather outages is greater than intentional attack outages.
+The p-value that I got was 0.0, so at a significance level of 0.05, we reject the null hypothesis. Because these results are statistically significant, we can conclude that the average outage duration of major outages caused by hurricanes is indeed greater than the average outage duration of major outages not caused by hurricanes.
 
 The plot below shows the observed difference against the empirical distribution of differences from the permutation tests.
 <iframe
-  src="assets/h_test.html"
+  src="assets/hurricane_mean_diff_perm_test.html"
   width="800"
   height="600"
   frameborder="0"
