@@ -233,6 +233,10 @@ My final model incorporated these features: `HURRICANE.NAMES`, `MONTH`, `CLIMATE
 
 I added `CLIMATE.REGION` (nominal) becaause certain climate regions have higher average outage durations, likely due to weather impact as well as more electricity demands in certain months. `YEAR` (quantitative) is included because there is an overall roughly negative linear trend between year and outage duration, where the average outage duration has gone down over time.
 
+I used a K-fold cross validation to find the best hyperparemeter to use with my lasso regression, and the only hyperparemeter tested was the alpha level. After performing a k-fold cross validation with cv=5, testing every alpha value from 1 to 35, I found that 20 was the optimal value for this hyperparemeter.
+
+I used RMSE to measure the performance of my model, and I got a value of 3306.05. Because the RMSE decreased from the baseline model to the final, this indicates better performance of the final model. It is more accurately able to predict the outage duration of a major power outage than my initial baseline model.
+
 # Fairness Analysis
 My groups for the fairness analysis are more recent years versus the older years, where recent years are defined as outages that occured anytime between 2008 and 2016 and older years are defined as outages that occured anytime before 2008. 
 
@@ -253,7 +257,3 @@ The figure below shows the distribution of the test statistic.
   height="600"
   frameborder="0"
 ></iframe>
-
-I used a K-fold cross validation to find the best hyperparemeter to use with my lasso regression, and the only hyperparemeter tested was the alpha level. After performing a k-fold cross validation with cv=5, testing every alpha value from 1 to 35, I found that 20 was the optimal value for this hyperparemeter.
-
-I used RMSE to measure the performance of my model, and I got a value of 3306.05. Because the RMSE decreased from the baseline model to the final, this indicates better performance of the final model. It is more accurately able to predict the outage duration of a major power outage than my initial baseline model.
