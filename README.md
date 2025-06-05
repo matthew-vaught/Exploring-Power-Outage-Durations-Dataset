@@ -233,6 +233,27 @@ My final model incorporated these features: `HURRICANE.NAMES`, `MONTH`, `CLIMATE
 
 I added `CLIMATE.REGION` (nominal) becaause certain climate regions have higher average outage durations, likely due to weather impact as well as more electricity demands in certain months. `YEAR` (quantitative) is included because there is an overall roughly negative linear trend between year and outage duration, where the average outage duration has gone down over time.
 
+# Fairness Analysis
+My groups for the fairness analysis are more recent years versus the older years, defined as outages that occured anytime between 2008 and 2016. 
+
+I decided on these groups because the cause category (which is predicted by my model) can greatly determine the outage duration. We want to make sure that the model can predict the classification well because this can inform energy companies on what to focus on to prevent longer outages. 
+
+My evaluation metric will be F1 score since the classes (longer vs shorter) are imbalanced, and this metric accounts for that imbalance, while also incorporating the precision and recall. I will use permutation tests to calculate the F1 score for longer vs shorter outages (that are randomly shuffled) and then compare this absolute difference to my initial observed absolute difference. 
+
+**Null Hypothesis:** The model is fair. Its F1 scores for longer and shorter outages are roughly the same, and any differences are due to random chance.
+
+**Alternative Hypothesis:** The model is unfair. Its F1 score for longer outages is significantly different from the F1 score for shorter outages.
+
+I performed a permutation test with 10000 trials. My significance level is the standard 0.05, and I got a p_value of 0.0 so because this is below the significance level, I reject the null hypothesis. The model is significantly different in terms of F1 score for longer vs shorter outages.
+
+The figure below shows the distribution of the statistic. 
+<iframe
+  src="assets/fairness.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
 I used a K-fold cross validation to find the best hyperparemeter to use with my lasso regression, and the only hyperparemeter tested was the alpha level. After performing a k-fold cross validation with cv=5, testing every alpha value from 1 to 35, I found that 20 was the optimal value for this hyperparemeter.
 
 I used RMSE to measure the performance of my model, and I got a value of 3306.05. Because the RMSE decreased from the baseline model to the final, this indicates better performance of the final model. It is more accurately able to predict the outage duration of a major power outage than my initial baseline model.
