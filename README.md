@@ -234,21 +234,21 @@ My final model incorporated these features: `HURRICANE.NAMES`, `MONTH`, `CLIMATE
 I added `CLIMATE.REGION` (nominal) becaause certain climate regions have higher average outage durations, likely due to weather impact as well as more electricity demands in certain months. `YEAR` (quantitative) is included because there is an overall roughly negative linear trend between year and outage duration, where the average outage duration has gone down over time.
 
 # Fairness Analysis
-My groups for the fairness analysis are more recent years versus the older years, defined as outages that occured anytime between 2008 and 2016. 
+My groups for the fairness analysis are more recent years versus the older years, where recent years are defined as outages that occured anytime between 2008 and 2016 and older years are defined as outages that occured anytime before 2008. 
 
-I decided on these groups because the cause category (which is predicted by my model) can greatly determine the outage duration. We want to make sure that the model can predict the classification well because this can inform energy companies on what to focus on to prevent longer outages. 
+I decided on these groups because year is definitely a big factor in the prediction of outage duration and I wanted to make sure that the relationship between year and outage duration wasn't changing over the years and thus impacting the performance of the model in one "era" or another. 
 
-My evaluation metric will be F1 score since the classes (longer vs shorter) are imbalanced, and this metric accounts for that imbalance, while also incorporating the precision and recall. I will use permutation tests to calculate the F1 score for longer vs shorter outages (that are randomly shuffled) and then compare this absolute difference to my initial observed absolute difference. 
+My evaluation metric will be RMSE because I want to test to make sure that the accuracy of the model, or in this case the average deviation of the true values from our model's predicted values, isn't higher for any one time range or another. I will use permutation tests to calculate the RMSE for recent vs old outages (that are randomly shuffled) and then compare this absolute difference to my observed absolute difference. 
 
-**Null Hypothesis:** The model is fair. Its F1 scores for longer and shorter outages are roughly the same, and any differences are due to random chance.
+**Null Hypothesis:** The model performs equally well before 2008 and in 2008 – 2016. There is no significant difference in the RMSE values for these two time ranges.
 
-**Alternative Hypothesis:** The model is unfair. Its F1 score for longer outages is significantly different from the F1 score for shorter outages.
+**Alternative Hypothesis:** The model is unfair. Its RMSE for outages before 2008 is significantly different from the RMSE for outages between 2008 to 2016.
 
-I performed a permutation test with 10000 trials. My significance level is the standard 0.05, and I got a p_value of 0.0 so because this is below the significance level, I reject the null hypothesis. The model is significantly different in terms of F1 score for longer vs shorter outages.
+I performed a permutation test with 1000 trials. At my significance level of 0.05, and with the p-value that I obtained of .56, I fail to reject the null hypothesis and cannot conclude that there is a significant difference in the RMSE for these two groups.
 
-The figure below shows the distribution of the statistic. 
+The figure below shows the distribution of the test statistic. 
 <iframe
-  src="assets/fairness.html"
+  src="assets/years_rmse_diff_perm_test.html"
   width="800"
   height="600"
   frameborder="0"
