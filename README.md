@@ -211,7 +211,7 @@ The plot below shows the observed difference against the empirical distribution 
 ></iframe>
 
 # Framing a Prediction Problem
-My model will try to predict the outage duration of a major power outage, which is a regression problem because we are trying to predict an actual numerical value.
+My model will try to predict the outage duration of a major power outage, which is a regression problem because we are trying to predict an actual numerical value. I chose to predict outage duration because this would help electrical companies and other organizations providing relief efforts to gauge the severity of the outage and how long they should prepare for the outage to last.
 
 I chose to use RMSE to evaluate the performance of my model because this allows me to see how many minutes off the model is on average which is very useful.
 
@@ -225,17 +225,16 @@ I chose these because I can use `HURRICANE.NAMES` to determine whether the outag
 
 In order to use the `HURRICANE.NAMES` column as an indicator of whether the outage was caused by a hurricane or not I built my own function is_hurricane that converts these values to either a 1 if it was caused by a hurricane or a 0 if it was not, and then I used a FunctionTransformer on this to convert the column from nominal to numerical. Additionally, because `CLIMATE.REGION` is also nominal, I used a OneHotEncoder to transform this column before creating a pipeline to integrate each of these transformations and train and test my linear regression model.
 
-The performance of this model wasn't the best, with an rmse of 3535.44 on the test set. 
-The R-Squared value was 0.053.
+The performance of this model wasn't the best, with an rmse of 3535.44 on the test set. The R-Squared value was 0.053. This baseline model doesn't exactly perform the best, given the fact that the RMSE indicates that our model is off by roughly 3500 minutes on each prediction, which equates to over 2 days. Given this information, this model likely would not be very practically useful.
 
 # Final Model
 My final model incorporated these features: `HURRICANE.NAMES`, `MONTH`, `CLIMATE.REGION`, and `YEAR`. I implemented a Lasso Regression and was able to achieve an R-Squared of .172 on the test set. 
 
-I added `CLIMATE.REGION` (nominal) becaause certain climate regions have higher average outage durations, likely due to weather impact as well as more electricity demands in certain months. `YEAR` (quantitative) is included because there is an overall roughly negative linear trend between year and outage duration, where the average outage duration has gone down over time.
+I added `CLIMATE.REGION` (nominal) because certain climate regions have higher average outage durations, likely due to weather impact as well as more electricity demands in certain months. `YEAR` (quantitative) is included because there is an overall roughly negative linear trend between year and outage duration, where the average outage duration has gone down over time.
 
 I used a K-fold cross validation to find the best hyperparemeter to use with my lasso regression, and the only hyperparemeter tested was the alpha level. After performing a k-fold cross validation with cv=5, testing every alpha value from 1 to 35, I found that 20 was the optimal value for this hyperparemeter.
 
-I used RMSE to measure the performance of my model, and I got a value of 3306.05. Because the RMSE decreased from the baseline model to the final, this indicates better performance of the final model. It is more accurately able to predict the outage duration of a major power outage than my initial baseline model.
+I used RMSE to measure the performance of my model, and I got a value of 3306.05. Because the RMSE decreased from the baseline model to the final, this indicates better performance of the final model. It is more accurately able to predict the outage duration of a major power outage than my initial baseline model, although the accuracy is still not as high as we would like in the ideal case.
 
 # Fairness Analysis
 My groups for the fairness analysis are more recent years versus the older years, where recent years are defined as outages that occured anytime between 2008 and 2016 and older years are defined as outages that occured anytime before 2008. 
