@@ -247,7 +247,7 @@ My evaluation metric will be RMSE because I want to test to make sure that the a
 
 **Alternative Hypothesis:** The model is unfair. Its RMSE for outages before 2008 is significantly different from the RMSE for outages between 2008 to 2016.
 
-I performed a permutation test with 1000 trials. At my significance level of 0.05, and with the p-value that I obtained of .56, I fail to reject the null hypothesis and cannot conclude that there is a significant difference in the RMSE for these two groups.
+I performed a permutation test with 1000 trials. At my significance level of 0.05, and with the p-value that I obtained of .73, I fail to reject the null hypothesis and cannot conclude that there is a significant difference in the RMSE for these two groups.
 
 The figure below shows the distribution of the test statistic. 
 <iframe
