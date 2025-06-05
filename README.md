@@ -63,7 +63,7 @@ First, I wanted to see what the distributions of my three severity metrics (outa
 <iframe
   src="assets/binned_outage_duration_hist.html"
   width="800"
-  height="600"
+  height="400"
   frameborder="0"
 ></iframe>
 
@@ -71,7 +71,7 @@ This next plot shows how the majority of the major power outages experienced a d
 <iframe
   src="assets/binned_demand_loss_hist.html"
   width="800"
-  height="500"
+  height="400"
   frameborder="0"
 ></iframe>
 
@@ -79,7 +79,7 @@ This plot shows how the majority of the major power outages affected between 50,
 <iframe
   src="assets/binned_customers_affected_hist.html"
   width="800"
-  height="500"
+  height="400"
   frameborder="0"
 ></iframe>
 
@@ -87,7 +87,7 @@ I also wanted to hone in on outage duration in particular to see how the average
 <iframe
   src="assets/outage_duration_by_year_line_plot.html"
   width="800"
-  height="500"
+  height="400"
   frameborder="0"
 ></iframe>
 
@@ -98,7 +98,7 @@ I first examined the relationship between the duration of the power outage and t
 <iframe
   src="assets/outage_duration_v_customers_served_hist.html"
   width="800"
-  height="500"
+  height="400"
   frameborder="0"
 ></iframe>
 
@@ -106,7 +106,7 @@ The next plot below is a box-and-whisker plot that shows the distribution of out
 <iframe
   src="assets/outage_duration_v_cause_category_boxandwhisk.html"
   width="800"
-  height="500"
+  height="400"
   frameborder="0"
 ></iframe>
 
@@ -154,7 +154,7 @@ Here is the distribution of the Nerc Region column when Outage Duration is missi
 <iframe
   src="assets/nerc_missingness_barh.html"
   width="800"
-  height="500"
+  height="400"
   frameborder="0"
 ></iframe>
 
@@ -162,7 +162,7 @@ I found an observed TVD of 0.145 which has a p value of 0.036. The empirical dis
 <iframe
   src="assets/nerc_missingness_pval.html"
   width="800"
-  height="500"
+  height="400"
   frameborder="0"
 ></iframe>
 
@@ -177,7 +177,7 @@ Here is the distribution of the Month column when Outage Duration is missing vs 
 <iframe
   src="assets/month_missingness_barh.html"
   width="800"
-  height="500"
+  height="400"
   frameborder="0"
 ></iframe>
 
@@ -185,7 +185,7 @@ I found an observed TVD of 0.13 which has a p value of 0.26. The empirical distr
 <iframe
   src="assets/month_missingness_pval.html"
   width="800"
-  height="500"
+  height="400"
   frameborder="0"
 ></iframe>
 
@@ -206,7 +206,7 @@ The plot below shows the observed difference against the empirical distribution 
 <iframe
   src="assets/hurricane_mean_diff_perm_test.html"
   width="800"
-  height="500"
+  height="400"
   frameborder="0"
 ></iframe>
 
@@ -254,6 +254,6 @@ The figure below shows the distribution of the test statistic.
 <iframe
   src="assets/years_rmse_diff_perm_test.html"
   width="800"
-  height="500"
+  height="400"
   frameborder="0"
 ></iframe>
